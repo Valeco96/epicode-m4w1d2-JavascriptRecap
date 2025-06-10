@@ -15,6 +15,12 @@
       crossorigin="anonymous"
     ></script>
     <title>API - PExels excercise</title>
+
+    <style>
+      body {
+        background-color: lightskyblue;
+      }
+    </style>
   </head>
   <body>
     <!--Crea una struttura con Bootstrap per inserire le parole chiave da cercare e il button per far partire la ricerca. Rendi i risultati in una griglia-->
@@ -28,37 +34,7 @@
       />
       <button id="searchButton" class="btn btn-success mt-2">Cerca</button>
       <!--un container per inserire le card con le immagini per layout della griglia-->
-      <div id="cardsContainer" class="row mt-4"></div>
-      <div class="row mt-2">
-        <div class="col">
-          <div class="card text-bg-dark">
-            <img class="card-img" alt="..." />
-            <div class="card-img-overlay">
-              <h5 class="card-title">Stormy Sky</h5>
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <p class="card-text"><small>Last updated 3 mins ago</small></p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card text-bg-dark">
-            <img class="card-img" alt="..." />
-            <div class="card-img-overlay">
-              <h5 class="card-title">Sunset</h5>
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <p class="card-text"><small>Last updated 3 mins ago</small></p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="cardsContainer" class="row mt-4 g-4"></div>
     </div>
   </body>
 
@@ -72,20 +48,75 @@
     const searchInput = document.getElementById("searchInput");
 
     function searchImage() {
-      let query = searchInput.value.trim();
-      console.log(query);
-      if (!query) return alert("Inserisci una query per la tua immagine!");
+      let pexImg = searchInput.value.trim();
+      console.log(pexImg);
+      if (!pexImg) return alert("Inserisci una query per la tua immagine!");
+
+      fetchImages(pexImg);
     }
 
     button.addEventListener("click", searchImage);
 
-    function mostraImmagini() {
-      fetch(`https://api.pexels.com/v1/search?query=${pexelImages}`, {
+    const cardsContainer = document.getElementById("cardsContainer");
+
+    //crea funzione per prendere le immagini da pexel via fetch. Quando arriva la risposta controlliamo se e' ok su network (200) e la convertiamo in JSON tramite .then
+    function fetchImages(pexImg) {
+      //usa il fetch per chiamare l'API
+      fetch(`https://api.pexels.com/v1/search?query=${pexImg}`, {
         headers: {
-          Authorization:
-            "BWaeg3ewRJKA9A3vyEFrXzODoC2cHbYDT9cO0jcj1xey6jQTcASwrAuE",
+          Authorization: apiKey,
         },
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          cardsContainer.innerHTML = ``; // svuota il contenitore delle card per eliminare ricerche precedenti
+          data.photos.forEach((photo) => {
+            // crea un array per ogni foto data.photo
+            //crea e aggiungi card..
+            const card = document.createElement("div");
+            card.className = "col-md-4 mb-4";
+
+            card.innerHTML = `<div class "card">
+              <img src = "${photo.src.medium}" class = "card-img-top" alt="${photo.photographer}" />
+              <div class="card-body">
+              <h5 class="card-title">Fotografo: ${photo.photographer}</h5>
+              <a href="${photo.url}" target="_blank" class="btn btn-primary">Vedi immagine</a>
+              </div>
+              </div>`;
+
+            cardsContainer.appendChild(card);
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Impossibile proseguire con la richiesta");
+        });
     }
+
+    //crea lo spazio HTML dove far apparire le card
+
+    //function creteCardImg(photo) {
+    ////crea div contenitore -> col
+    //const col = document.createElement("div");
+    //col.className = "col-md-4 mb-4";
+
+    //const card = createElement("div");
+    //card.className = "card";
+
+    //const img = createElement("img");
+    //img.className = "card-img-fluid";
+    //img.src = photo.src.medium;
+    //img.alt = photo.alt;
+
+    //const cardTitle = createElement("h5");
+    // cardTitle.className = "cardTitle";
+
+    //const link = createElement("a");
+    //link.className = "btn btn-success";
+
+    //col.appendChild(card);
+    //return col;
+    //}
   </script>
 </html>
