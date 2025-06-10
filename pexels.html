@@ -64,7 +64,20 @@
 
   <script>
     //chiave da includere in ogni richesta da fare degli API. Di default la fetch fa una GET (richiesta di informazioni). Inerisci l'indirizzo e passa un secondo parametro di configurazione, per esempio un oggetto, dove inserire la chiave di configurazione e autorizzazione
-    const pexelImages = document.querySelector(".img-card");
+    //crea una costante per richiamare la tua API KEY
+    const apiKey = "BWaeg3ewRJKA9A3vyEFrXzODoC2cHbYDT9cO0jcj1xey6jQTcASwrAuE";
+
+    //funzione per prendere il valore inserito nell'input space, togliere spazi inutili con .trim()
+    const button = document.getElementById("searchButton");
+    const searchInput = document.getElementById("searchInput");
+
+    function searchImage() {
+      let query = searchInput.value.trim();
+      console.log(query);
+      if (!query) return alert("Inserisci una query per la tua immagine!");
+    }
+
+    button.addEventListener("click", searchImage);
 
     function mostraImmagini() {
       fetch(`https://api.pexels.com/v1/search?query=${pexelImages}`, {
