@@ -9,18 +9,9 @@
       integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
       crossorigin="anonymous"
     />
-
-    <title>EPIbook</title>
+    <title>EpiBook Cart</title>
   </head>
   <body>
-    <!--Crea un marketplace di libri online:
-1) Una homepage che mostri tutti i libri attraverso delle card di bootstrap
-2) Le card dovrebbero avere un pulsante per aggiungere al carrello e uno per saltare un prodotto
-3) Una sezione per il carrello
-4) Una sezione per cercare i libri-->
-
-    <!--Navbar: sezione per cercare i libri-->
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <i class="fa-solid fa-book-open mx-3"></i>
@@ -39,10 +30,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="epibook.html"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="epibook-cart.html">Your cart</a>
+              <a class="nav-link" href="#">Your cart</a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -86,15 +82,6 @@
         </div>
       </div>
     </nav>
-
-    <main>
-      <div id="search-box" class="container mt-5">
-        <h1 class="mb-5">Our selection for you:</h1>
-
-        <!--un container per inserire le card con le immagini per layout della griglia-->
-        <div id="cardsContainer" class="row mt-4 g-4 mx-4"></div>
-      </div>
-    </main>
 
     <script src="epibook.js"></script>
     <script
