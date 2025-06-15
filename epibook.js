@@ -55,6 +55,9 @@ function displayBooks(booksArray) {
     cardLink.className = "btn btn-success";
     cardLink.href = "#";
     cardLink.textContent = "Aggiungi al carrello";
+    cardLink.setAttribute("id", "bookId");
+    cardLink.dataset.bookId = book.asin; //asin e' l'id del libro nell'array
+    cardLink.addEventListener("click", addToCart);
     cardBody.appendChild(cardLink);
 
     card.appendChild(cardBody);
@@ -79,5 +82,32 @@ function searchBook(event) {
 }
 
 searchButton.addEventListener("click", searchBook);
+
+//Crea una funzione per aggiungere al carrello al click del link:
+//al click, salva in un array del carrello; viene aggiunto nella pagina HTML e cambia stile
+
+//Crea un array vuoto per tenere traccia dei libri nel carrello
+let cartBooks = [];
+
+function addToCart(event) {
+  event.preventDefault();
+  console.log(bookId);
+
+  if (!cartBooks.includes(book)) {
+    //per indicare, se il libro selezionato non e' gia' presente nel carrello (diverso da presente), push nell'array
+    cartBooks.push(book);
+  }
+  // } else if (cartBooks.includes(book)) {
+  //   {
+  //     alert("This book is already in your cart!");
+  //   }
+  // } else {
+  //   cartBooks.push(book);
+  //   alert("This book was added to your cart!");
+  // }
+
+  //Cambia stile della cart
+  card.classList.add("border", "border-success", "shadow");
+}
 
 fetchBook(); //Alla fine del file, carica tutti i libri all'inizio
